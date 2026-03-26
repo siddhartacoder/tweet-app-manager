@@ -21,11 +21,27 @@ eventListeners();
 
 function eventListeners() {
   formulario.addEventListener("submit", agregarTweet);
+  
+  listaTweets.addEventListener("click", (e)=> {
+    if(e.target.classList.contains("borrar-tweet")) {
+      const id = Number(e.target.parentElement.dataset.tweetId);
+      borrarTweet(id);
+    }
+  });
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    tweets = JSON.parse(localStorage.getItem("tweets")) || [];
+
+    crearHTML();
+  });
 }
 
 // ============================================
 // FUNCTIONS
 // ============================================
+
+// Handles tweet submission: validates input, creates tweet object,
+// updates state and re-renders the tweet list
 
 function agregarTweet(e) {
   e.preventDefault();
@@ -35,7 +51,17 @@ function agregarTweet(e) {
     mostrarError("El mensaje no puede estar vacio");
     return;
   }
-  console.log("agregando tweet");
+  const tweetObj = {
+    id: Date.now(),
+    texto: tweet,
+  };
+
+  // Create a new tweets array using the spread operator to keep state immutable
+  tweets = [...tweets, tweetObj];
+
+  crearHTML();
+
+  formulario.reset();
 }
 
 function mostrarError(error) {
@@ -43,10 +69,46 @@ function mostrarError(error) {
   mensajeError.textContent = error;
   mensajeError.classList.add("error");
 
-  //insertamos el mensaje en el contenido
   contenido.appendChild(mensajeError);
 
   setTimeout(() => {
     mensajeError.remove();
   }, 3000);
+}
+
+function crearHTML() {
+  limpiarHTML();
+
+  if (tweets.length > 0) {
+    tweets.forEach((tweet) => {
+      const btnEliminar = document.createElement("a");
+      btnEliminar.classList.add("borrar-tweet");
+      btnEliminar.innerText = "X";
+
+
+
+      const li = document.createElement("li");
+      li.textContent = tweet.texto;
+      li.dataset.tweetId = tweet.id;
+      listaTweets.appendChild(li);
+      li.appendChild(btnEliminar);
+    });
+  }
+  sincronizarStorage();
+}
+
+function sincronizarStorage() {
+  localStorage.setItem("tweets", JSON.stringify(tweets));
+}
+
+function limpiarHTML() {
+  while (listaTweets.firstChild) {
+    listaTweets.removeChild(listaTweets.firstChild);
+  }
+}
+
+function borrarTweet(id) {
+  tweets = tweets.filter((tweet) => tweet.id !== id);
+
+  crearHTML();
 }
