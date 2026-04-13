@@ -1,25 +1,129 @@
-h1, h2 {
-    text-align: center;
+:root {
+  --bg: #121212;
+  --panel: #111827;
+  --panel-2: #1f2937;
+  --text: #f8fafc;
+  --muted: #cbd5e1;
+  --accent: #22d3ee;
+  --danger: #fb7185;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background-color: var(--bg);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5em;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  margin: 0 0 0.8rem;
+  line-height: 1.2;
+}
+
+label {
+  display: block;
+  margin: 0 0 0.8rem;
+  line-height: 1.2;
+  color: var(--muted);
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 #contenido {
-    margin-top: 40px;
+  padding: 4rem 0;
 }
-.borrar-tweet,
+
+.container {
+  max-width: 1100px;
+}
+
+.borrar-tweet {
+position: absolute;
+top: 1rem;
+right: 1rem;
+color: var(--danger);
+text-decoration: none;
+font-weight: bold;
+cursor: pointer;
+}
+
 .borrar-tweet:hover {
-    float: right;
-    cursor: pointer;
-    color: red;
-    font-weight: bold;
+color: var(--text);
+}
+
+#lista-tweets {
+  margin: 0;
+  padding: 0;
+}
+
+#lista-tweets li {
+  position: relative;
+  margin-bottom: 1rem;
+  padding: 1.2rem 4rem 1.2rem 1.2rem;
+  list-style: none;
+  background-color: var(--panel-2);
+  border-radius: 1rem;
+  color: var(--text);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  line-height: 1.6;
 }
 
 .error {
-    background-color: red;
-    text-align: center;
-    padding: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
-    max-width: 400px;
-    margin: 0 auto;
-    color: white;
+  background-color: #dc2626;
+  text-align: center;
+  padding: 1rem 1.2rem;
+  text-transform: uppercase;
+  border-radius: 1rem;
+  font-weight: 700;
+  max-width: 40rem;
+  margin: 0 auto;
+  color: var(--text);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 2rem;  
+}
+
+.row .columns {
+  width: auto;
+  float: none;
+  margin-left: 0;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background-color: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
 }

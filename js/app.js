@@ -45,7 +45,7 @@ function eventListeners() {
 
 function agregarTweet(e) {
   e.preventDefault();
-  const tweet = tweetInput.value;
+  const tweet = tweetInput.value.trim();
 
   if (tweet === "") {
     mostrarError("El mensaje no puede estar vacio");
